@@ -38,6 +38,7 @@ appearance={{
         width:"100%"
 
     },
+
     organizationSwitcherTrigger:{
         padding:"6px",
         width:"100%",
