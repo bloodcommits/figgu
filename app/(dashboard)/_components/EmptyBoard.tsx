@@ -16,7 +16,7 @@ function EmptyBoard() {
       orgId:organization.id ,
       title:"Untitled"
     }).then( (id)=>{
-      toast.success("Board craeted")
+      toast.success("Board created")
     }).catch(()=>{
       "failed to create board"
     })
