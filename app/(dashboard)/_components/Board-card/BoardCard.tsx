@@ -8,6 +8,12 @@ import Footer from "./Footer";
 import { Skeleton } from "@/components/ui/skeleton";
 import Action from "@/components/Action";
 import { MoreHorizontal } from "lucide-react";
+import { useApiMutation } from "@/hooks/use-api-mutation";
+import { api } from "@/convex/_generated/api";
+import { toast } from "sonner";
+import { useMutation } from "convex/react";
+import { Id } from "@/convex/_generated/dataModel";
+
 
 
 interface BoardCradProp{
@@ -29,11 +35,31 @@ createdAt,
 imageUrl,
 orgId,
 isFavorite
-}:BoardCradProp) {
-const {userId} = useAuth();
-  const authorlable = userId===authorId ? "You" :authorname
+}:BoardCradProp) { const { userId } = useAuth();
 
-  const createdAtlabel = formatDistanceToNow(createdAt , {addSuffix:true})
+const authorLabel = userId === authorId ? "You" : authorname;
+const createdAtLabel = formatDistanceToNow(createdAt, {
+  addSuffix: true,
+});
+
+const {
+  mutate: onFavorite,
+  pending: pendingFavorite,
+} = useApiMutation(api.board.favorite);
+const {
+  mutate: onUnfavorite,
+  pending: pendingUnfavorite,
+} = useApiMutation(api.board.unfavorite);
+
+const toggleFavorite = () => {
+  if (isFavorite) {
+    onUnfavorite({ id })
+      .catch(() => toast.error("Failed to unfavorite"))
+  } else {
+    onFavorite({ id, orgId })
+      .catch(() => toast.error("Failed to favorite"))
+  }
+}
   return (
     <Link href={`/board/${id}`}>
     <div className="group aspect-[100/127] border rounded-lg flex flex-col justify-between overflow-hidden">
@@ -52,12 +78,12 @@ const {userId} = useAuth();
             </Action>
         </div>
         <Footer
-        isFavorite={false}
+        isFavorite={isFavorite}
         title={title}
-        authorlable={authorlable}
-        createdAtlabel={createdAtlabel}
-        onClick={()=>{}}
-        disabled ={false}
+        authorlable={authorLabel}
+        createdAtlabel={createdAtLabel}
+        onClick={toggleFavorite}
+        disabled ={pendingFavorite||pendingUnfavorite}
         />
 
     </div>
