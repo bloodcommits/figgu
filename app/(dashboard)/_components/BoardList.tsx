@@ -21,7 +21,7 @@ export const BoardList = ({ orgId, query }: Boardlistprop) => {
     ...query,
   });
 
-  console.log(data);
+  // console.log(data);
 
   if (data === undefined) {
     return (

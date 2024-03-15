@@ -1,11 +1,22 @@
 import React from 'react'
 import Canvas from './_components/Canvas'
-import Info from './_components/Info'
+import { Room } from '@/components/Room';
+import Loading from './_components/Loading';
 
-function BoardIdPage() {
+
+interface BoardIdProps{
+  params:{
+    boardId:string;
+  }
+}
+
+function BoardIdPage({params}:BoardIdProps) {
   return (
     <div>
-        <Canvas/>
+      <Room roomId={params.boardId} fallback={<Loading/>}>
+
+        <Canvas boardId={params.boardId}/>
+      </Room>
        
     </div>
   )
