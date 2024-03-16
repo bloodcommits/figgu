@@ -1,5 +1,6 @@
 // import { Skeleton } from "@/components/ui/skeleton"
 "use client"
+import { connectionIdToColor } from "@/lib/utils";
 import { UserAvatar } from "./UserAvatar"
 
 import { useOthers , useSelf } from "@/liveblocks.config"
@@ -18,6 +19,7 @@ const hasmoreuser = user.length > max_shownuser
           {user.slice(0 , max_shownuser).map(({connectionId , info})=>{
             return(
               <UserAvatar 
+              borderColor={connectionIdToColor(connectionId)}
               key = {connectionId}
               src={info?.picture}
               name={info?.name}
@@ -28,6 +30,7 @@ const hasmoreuser = user.length > max_shownuser
           {
             currentuser&&(
               <UserAvatar
+              borderColor={connectionIdToColor(currentuser.connectionId)}
               src={currentuser.info?.picture}
               name = {`${currentuser.info?.name}`}
               fallback={currentuser.info?.name?.[0]}
