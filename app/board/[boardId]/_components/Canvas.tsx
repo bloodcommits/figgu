@@ -102,7 +102,11 @@ canUndo={false}
 undo={history.undo}
 redo={history.redo}
 />
-<svg className='h-[100vh] w-[100vw]' >
+<svg className='h-[100vh] w-[100vw]'
+onWheel={onWheel}
+onPointerMove={onPointerMove}
+
+>
   <g>
     <CursorsPresence/>
 
